@@ -59,7 +59,9 @@ wp_head();
 	                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 	                        <i class="fa fa-bars"></i>
 	                    </button>
-	                    <a class="navbar-brand" href="<?php echo site_url(); ?>"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo.png" class="logo logo-scrolled" alt="headerimg"></a>
+	                    <a class="navbar-brand" href="<?php echo site_url(); ?>" <?php if ( function_exists( 'the_custom_logo' ) ) {
+ the_custom_logo();
+} ?> </a>
 	                </div>
 	                <!-- End Header Navigation -->
 

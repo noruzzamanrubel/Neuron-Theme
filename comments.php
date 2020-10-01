@@ -1,61 +1,88 @@
 <?php
 /**
- * The template for displaying Comments
+ * The template for displaying comments
  *
- * The area of the page that contains comments and the comment form.
+ * This is the template that displays the area of the page that contains both the current comments
+ * and the comment form.
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package WordPress
- * @subpackage Twenty_Thirteen
- * @since Twenty Thirteen 1.0
+ * @subpackage Timer
+ * @version 1.0
  */
 
 /*
- * If the current post is protected by a password and the visitor has not yet
- * entered the password we will return early without loading the comments.
+ * If the current post is protected by a password and
+ * the visitor has not yet entered the password we will
+ * return early without loading the comments.
  */
-if ( post_password_required() )
+if ( post_password_required() ) {
 	return;
+}
 ?>
 
 <div id="comments" class="comments-area">
 
-	<?php if ( have_comments() ) : ?>
+	<?php
+	// You can start editing here -- including this comment!
+	if ( have_comments() ) :
+		?>
 		<h2 class="comments-title">
 			<?php
-				printf( wp_kses( _nx( 'One thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'comments title', 'woodmart' ), array() ),
-					number_format_i18n( get_comments_number() ), '<span>' . get_the_title() . '</span>' );
+			$comments_number = get_comments_number();
+			if ( '1' === $comments_number ) {
+				/* translators: %s: Post title. */
+				printf( _x( 'One Reply to &ldquo;%s&rdquo;', 'comments title', 'timer' ), get_the_title() );
+			} else {
+				printf(
+					/* translators: 1: Number of comments, 2: Post title. */
+					_nx(
+						'%1$s Reply to &ldquo;%2$s&rdquo;',
+						'%1$s Replies to &ldquo;%2$s&rdquo;',
+						$comments_number,
+						'comments title',
+						'timer'
+					),
+					number_format_i18n( $comments_number ),
+					get_the_title()
+				);
+			}
 			?>
 		</h2>
 
 		<ol class="comment-list">
 			<?php
-				wp_list_comments( array(
-					'style'       => 'ol',
-					'short_ping'  => true,
-					'avatar_size' => 74,
-				) );
+				wp_list_comments(
+					array(
+						'avatar_size' => 100,
+						'style'       => 'ol',
+						'short_ping'  => true,
+						'reply_text'  => __( 'Reply', 'timer' ),
+					)
+				);
 			?>
-		</ol><!-- .comment-list -->
+		</ol>
 
 		<?php
-			// Are there comments to navigate through?
-			if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
+		the_comments_pagination(
+			array(
+				'prev_text' => '<span class="screen-reader-text">' . __( 'Previous', 'timer' ) . '</span>',
+				'next_text' => '<span class="screen-reader-text">' . __( 'Next', 'timer' ) . '</span>',
+			)
+		);
+
+	endif; // Check for have_comments().
+
+	// If comments are closed and there are comments, let's leave a little note, shall we?
+	if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
 		?>
-		<nav class="navigation comment-navigation" role="navigation">
-			<h1 class="screen-reader-text section-heading"><?php esc_html_e( 'Comment navigation', 'woodmart' ); ?></h1>
-			<div class="nav-previous"><?php previous_comments_link( esc_html__( '&larr; Older Comments', 'woodmart' ) ); ?></div>
-			<div class="nav-next"><?php next_comments_link( esc_html__( 'Newer Comments &rarr;', 'woodmart' ) ); ?></div>
-		</nav><!-- .comment-navigation -->
-		<?php endif; // Check for comment navigation ?>
 
-		<?php if ( ! comments_open() && get_comments_number() ) : ?>
-			<p class="no-comments"><?php esc_html_e( 'Comments are closed.' , 'woodmart' ); ?></p>
-		<?php endif; ?>
+		<p class="no-comments"><?php _e( 'Comments are closed.', 'timer' ); ?></p>
+		<?php
+	endif;
 
-	<?php endif; // have_comments() ?>
-
-	<?php comment_form(array(
-		'comment_notes_after' => ''
-	)); ?>
+	comment_form();
+	?>
 
 </div><!-- #comments -->

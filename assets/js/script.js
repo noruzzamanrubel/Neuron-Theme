@@ -18,7 +18,13 @@
 **/
 
 (function ($) {
-    "use strict";
+	"use strict";
+	
+	$('.comment-form-author input').attr('placeholder', 'Your Name');
+    $('.comment-form-email input').attr('placeholder', 'Your Email');
+    $('.comment-form-url input').attr('placeholder', 'Your Subject');
+    $('.comment-form-comment textarea').attr('placeholder', 'Your Message');
+    $('.comment-form-comment textarea').attr('height', '400');
 	
 	// document ready function
 	// ============================================
