@@ -1,8 +1,15 @@
 <?php
+//theme Customizer 
+require_once get_template_directory() . '/inc/customizer.php';
+//theme Customizer 
 
 //wp-bootstrap-navwalker For Sub Menu
 require_once get_template_directory() . '/lib/class-wp-bootstrap-navwalker.php';
 //wp-bootstrap-navwalker For Sub Menu
+
+//Tgm Plugin Activation
+require_once get_template_directory() . '/lib/class-tgm-plugin-activation.php';
+require_once get_theme_file_path( "/inc/tgm.php" );
 
 //Include Shortcode file
 require_once get_theme_file_path( "/inc/shortcode.php" );

@@ -24,11 +24,11 @@ wp_head();
 							<div class="contact">
 								<p>
 									<i class="fa fa-phone"></i>
-									+880 123 456 789
+									<?php echo esc_html(get_theme_mod('phone_number')); ?>
 								</p>
 								<p>
 									<i class="fa fa-envelope"></i>
-									<a href="#">24hrsuport@domain.com</a>
+									<a href="<?php the_permalink();?>"><?php echo esc_html(get_theme_mod('email_setting')); ?></a>
 								</p>
 							</div><!-- /.contact -->
 						</div><!-- /.col-sm-8 -->
@@ -36,11 +36,15 @@ wp_head();
 						<div class="col-sm-4">
 							<div class="social-icon">
 								<ul>
-									<li><a href=""><i class="fa fa-facebook"></i></a></li>
-									<li><a href=""><i class="fa fa-twitter"></i></a></li>
-									<li><a href=""><i class="fa fa-linkedin"></i></a></li>
-									<li><a href=""><i class="fa fa-google-plus"></i></a></li>
-									<li><a href=""><i class="fa fa-tumblr"></i></a></li>
+									<?php if(get_theme_mod('neuron_facebook')){?>
+									<li><a href="<?php esc_url(get_theme_mod('neuron_facebook'));?>"><i class="fa fa-facebook"></i></a></li>
+									<?php } ?>
+									<?php if(get_theme_mod('neuron_twitter')){?>
+									<li><a href="<?php get_theme_mod('neuron_twitter');?>"><i class="fa fa-twitter"></i></a></li>
+									<?php } ?>
+									<?php if(get_theme_mod('neuron_linkedin')){?>
+									<li><a href="<?php get_theme_mod('neuron_linkedin');?>"><i class="fa fa-linkedin"></i></a></li>
+									<?php } ?>
 								</ul>
 							</div><!-- /.social-icon -->
 						</div><!-- /.col-sm-4 -->
@@ -60,8 +64,8 @@ wp_head();
 	                        <i class="fa fa-bars"></i>
 	                    </button>
 	                    <a class="navbar-brand" href="<?php echo site_url(); ?>" <?php if ( function_exists( 'the_custom_logo' ) ) {
- the_custom_logo();
-} ?> </a>
+ 							the_custom_logo();
+							} ?> </a>
 	                </div>
 	                <!-- End Header Navigation -->
 
